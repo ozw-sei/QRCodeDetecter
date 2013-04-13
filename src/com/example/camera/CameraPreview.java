@@ -6,27 +6,36 @@ import com.example.QR.QRReader;
 
 public class CameraPreview implements PreviewCallback
 {
-	public static final String TAG = "CameraPreview";
-	final int mPreviewWidth;
-	final int mPreviewHeight;
-	QRReader mReader = new QRReader();
-	public CameraPreview( int previewWidth,int previewHeight ) {
-		mPreviewHeight = previewHeight;
-		mPreviewWidth = previewWidth;
-	}
+    public static final String TAG = "CameraPreview";
+    final int mPreviewWidth;
+    final int mPreviewHeight;
+    QRReader mReader = new QRReader();
 
-	@Override
-	public void onPreviewFrame( byte[] bytes, android.hardware.Camera camera ) {
+    /**
+     * CameraPreviewSize
+     *
+     * @param previewWidth
+     *         プレビューの幅
+     * @param previewHeight
+     *         プレビューの高さ
+     */
+    public CameraPreview( int previewWidth, int previewHeight ) {
+        mPreviewHeight = previewHeight;
+        mPreviewWidth = previewWidth;
+    }
 
-		try{
-			mReader.readYUV( bytes, mPreviewWidth, mPreviewHeight, 0, 0, mPreviewWidth, mPreviewHeight, false );
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-		if(QRReader.isFound()){
-			Log.d( TAG, "found" );
-		}
-	}
+    @Override
+    public void onPreviewFrame( byte[] bytes, android.hardware.Camera camera ) {
+
+        try {
+            mReader.readYUV( bytes, mPreviewWidth, mPreviewHeight, 0, 0, mPreviewWidth, mPreviewHeight, false );
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        if ( QRReader.isFound() ) {
+            Log.d( TAG, "found" );
+        }
+    }
 
 }
